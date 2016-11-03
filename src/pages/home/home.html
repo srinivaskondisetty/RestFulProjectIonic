@@ -1,17 +1,19 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>
+			Loans
+		</ion-title>
+	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-
-  <p>{{data}}</p>
-
+<ion-content>
+	<ion-list>
+		<ion-item *ngFor='let loan of loans' class="item-button-right">
+			<span>Loan ID:  {{loan.loan_id}}	</span>
+			<span>Bucket: {{loan.bucket}}</span>
+			<button ion-button outline item-right (click)="getDetails($event,loan.loan_id)">
+      <ion-icon name="information-circle"></ion-icon>      
+    </button>
+		</ion-item>
+	</ion-list>
 </ion-content>

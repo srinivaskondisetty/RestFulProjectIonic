@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title *ngIf="loanDetails">Bucket: {{loanDetails.bucket}}</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content>
+    <ion-list *ngIf="loanDetails">
+        <ion-item>
+        Booking Date: {{loanDetails.booking_date}}
+        </ion-item>
+        <ion-item>
+        Maturity Date: {{loanDetails.maturity_date}}
+        </ion-item>
+        <ion-item>
+        Loan Tenure: {{loanDetails.loan_tenure}}
+        </ion-item>
+        <ion-item>
+        Current Month Instalment: {{loanDetails.cuurent_month_instalment}}
+        </ion-item>
+        <ion-item>
+        Booking Date: {{loanDetails.total_installments_due_date}}
+        </ion-item>
+        <ion-item>
+        Last Paid Instalment Date: {{loanDetails.last_paid_instl_date}}
+        </ion-item>
+        <ion-item>
+        Booking Date: {{loanDetails.last_received_date}}
+        </ion-item>
+        <ion-item>
+        Last Receipt Amount: {{loanDetails.last_receipt_amount}}
+        </ion-item>
+        <ion-item>
+        Total Instalment Due: {{loanDetails.total_inst_due}}
+        </ion-item>
+        <ion-item>
+        Total Instalment Received: {{loanDetails.total_instl_recd}}
+        </ion-item>
+        <ion-item>
+        DPD: {{loanDetails.dpd}}
+        </ion-item>
+        <ion-item>
+        Overdue Instalment Count: {{loanDetails.overdue_instl_count}}
+        </ion-item>
+         <ion-item>
+        Balance Principle: {{loanDetails.balance_prin}}
+        </ion-item>
+         <ion-item>
+        Overdue Principle: {{loanDetails.overdue_prin}}
+        </ion-item>
+         <ion-item>
+        Total Due Amount: {{loanDetails.total_due}}
+        </ion-item>
+         <ion-item>
+        Total Pos: {{loanDetails.total_pos}}
+        </ion-item>
+         <ion-item>
+        Created On: {{loanDetails.createdOn}}
+        </ion-item>
+    </ion-list>
+</ion-content>

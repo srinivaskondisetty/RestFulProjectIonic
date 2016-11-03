@@ -1,7 +1,7 @@
 // Imports
-import { Injectable }     from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions, Jsonp } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
@@ -9,18 +9,338 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class BasicService {
-     // Resolve HTTP using the constructor
-     constructor (private http: Http) {}
-     // private instance variable to hold base url
-     private basicUrl = 'https://jsonplaceholder.typicode.com'; 
+    // Resolve HTTP using the constructor
+    constructor(private http: Http) { }
+    // private instance variable to hold base url
+    private basicUrl = 'http://163.172.161.123:8080/';
 
-     getJson() {
-        return this.http.get(this.basicUrl + '/posts/1')
-            .map(res => res.json())
-            .catch(this.handleError);
+    private loans =
+    [
+        {
+            "id": "5819dcd9df295f5fb9b18258",
+            "bucket": "210",
+            "loan_id": "4300",
+            "booking_date": "2003-06-25",
+            "maturity_date": "2005-12-25",
+            "loan_tenure": "30",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "30",
+            "last_paid_instl_date": "2003-12-25",
+            "last_received_date": "2006-11-27",
+            "last_receipt_amount": "33000.0000",
+            "total_inst_due": "500000.0000",
+            "total_instl_recd": "100100.0000",
+            "dpd": "4664",
+            "overdue_instl_count": "24.02",
+            "balance_prin": "0.0000",
+            "overdue_prin": "333563.0000",
+            "total_due": "399900.0000",
+            "total_pos": "333563.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b18259",
+            "bucket": "210",
+            "loan_id": "5411",
+            "booking_date": "2004-01-28",
+            "maturity_date": "2005-07-28",
+            "loan_tenure": "18",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "18",
+            "last_paid_instl_date": "2004-02-28",
+            "last_received_date": "0000-00-00",
+            "last_receipt_amount": "0.0000",
+            "total_inst_due": "149375.0000",
+            "total_instl_recd": "0.0000",
+            "dpd": "4599",
+            "overdue_instl_count": "18.00",
+            "balance_prin": "0.0000",
+            "overdue_prin": "125000.0000",
+            "total_due": "149375.0000",
+            "total_pos": "125000.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b1825a",
+            "bucket": "210",
+            "loan_id": "5350",
+            "booking_date": "2004-01-19",
+            "maturity_date": "2006-01-19",
+            "loan_tenure": "24",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "24",
+            "last_paid_instl_date": "2006-01-19",
+            "last_received_date": "2010-10-27",
+            "last_receipt_amount": "20000.0000",
+            "total_inst_due": "366000.0000",
+            "total_instl_recd": "362400.0000",
+            "dpd": "3908",
+            "overdue_instl_count": "0.24",
+            "balance_prin": "0.0000",
+            "overdue_prin": "3600.0000",
+            "total_due": "3600.0000",
+            "total_pos": "3600.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b1825b",
+            "bucket": "210",
+            "loan_id": "10848",
+            "booking_date": "2005-12-14",
+            "maturity_date": "2007-11-14",
+            "loan_tenure": "23",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "23",
+            "last_paid_instl_date": "2006-01-14",
+            "last_received_date": "0000-00-00",
+            "last_receipt_amount": "0.0000",
+            "total_inst_due": "240000.0000",
+            "total_instl_recd": "0.0000",
+            "dpd": "3913",
+            "overdue_instl_count": "23.00",
+            "balance_prin": "0.0000",
+            "overdue_prin": "200000.0000",
+            "total_due": "240000.0000",
+            "total_pos": "200000.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b1825c",
+            "bucket": "210",
+            "loan_id": "10734",
+            "booking_date": "2005-12-03",
+            "maturity_date": "2007-11-03",
+            "loan_tenure": "23",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "23",
+            "last_paid_instl_date": "2007-11-03",
+            "last_received_date": "2008-03-15",
+            "last_receipt_amount": "10500.0000",
+            "total_inst_due": "79300.0000",
+            "total_instl_recd": "77000.0000",
+            "dpd": "3255",
+            "overdue_instl_count": "1.00",
+            "balance_prin": "0.0000",
+            "overdue_prin": "2247.0000",
+            "total_due": "2300.0000",
+            "total_pos": "2247.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b1825d",
+            "bucket": "210",
+            "loan_id": "11016",
+            "booking_date": "2005-12-27",
+            "maturity_date": "2008-09-27",
+            "loan_tenure": "33",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "33",
+            "last_paid_instl_date": "2005-12-27",
+            "last_received_date": "2005-12-27",
+            "last_receipt_amount": "6400.0000",
+            "total_inst_due": "203200.0000",
+            "total_instl_recd": "6400.0000",
+            "dpd": "3931",
+            "overdue_instl_count": "32.00",
+            "balance_prin": "0.0000",
+            "overdue_prin": "153600.0000",
+            "total_due": "196800.0000",
+            "total_pos": "153600.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b1825e",
+            "bucket": "210",
+            "loan_id": "15175",
+            "booking_date": "2006-07-03",
+            "maturity_date": "2009-06-03",
+            "loan_tenure": "35",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "35",
+            "last_paid_instl_date": "2006-08-03",
+            "last_received_date": "0000-00-00",
+            "last_receipt_amount": "0.0000",
+            "total_inst_due": "465500.0000",
+            "total_instl_recd": "0.0000",
+            "dpd": "3712",
+            "overdue_instl_count": "35.00",
+            "balance_prin": "0.0000",
+            "overdue_prin": "350000.0000",
+            "total_due": "465500.0000",
+            "total_pos": "350000.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b1825f",
+            "bucket": "210",
+            "loan_id": "11589",
+            "booking_date": "2006-02-03",
+            "maturity_date": "2008-01-03",
+            "loan_tenure": "23",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "23",
+            "last_paid_instl_date": "2007-03-03",
+            "last_received_date": "2010-05-06",
+            "last_receipt_amount": "25000.0000",
+            "total_inst_due": "192000.0000",
+            "total_instl_recd": "108500.0000",
+            "dpd": "3500",
+            "overdue_instl_count": "10.01",
+            "balance_prin": "0.0000",
+            "overdue_prin": "76699.0000",
+            "total_due": "83500.0000",
+            "total_pos": "76699.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b18260",
+            "bucket": "210",
+            "loan_id": "13180",
+            "booking_date": "2006-04-13",
+            "maturity_date": "2008-04-13",
+            "loan_tenure": "24",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "24",
+            "last_paid_instl_date": "2008-01-13",
+            "last_received_date": "2008-07-30",
+            "last_receipt_amount": "10000.0000",
+            "total_inst_due": "109800.0000",
+            "total_instl_recd": "99475.0000",
+            "dpd": "3184",
+            "overdue_instl_count": "2.26",
+            "balance_prin": "0.0000",
+            "overdue_prin": "10102.0000",
+            "total_due": "10325.0000",
+            "total_pos": "10102.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b18261",
+            "bucket": "210",
+            "loan_id": "3738",
+            "booking_date": "2003-02-25",
+            "maturity_date": "2004-08-25",
+            "loan_tenure": "18",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "18",
+            "last_paid_instl_date": "2003-11-25",
+            "last_received_date": "2004-05-19",
+            "last_receipt_amount": "30000.0000",
+            "total_inst_due": "209125.0000",
+            "total_instl_recd": "99925.0000",
+            "dpd": "4694",
+            "overdue_instl_count": "9.41",
+            "balance_prin": "0.0000",
+            "overdue_prin": "99707.0000",
+            "total_due": "109200.0000",
+            "total_pos": "99707.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b18262",
+            "bucket": "210",
+            "loan_id": "3737",
+            "booking_date": "2003-02-25",
+            "maturity_date": "2004-08-25",
+            "loan_tenure": "18",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "18",
+            "last_paid_instl_date": "2004-04-25",
+            "last_received_date": "2008-02-28",
+            "last_receipt_amount": "62000.0000",
+            "total_inst_due": "209125.0000",
+            "total_instl_recd": "158725.0000",
+            "dpd": "4542",
+            "overdue_instl_count": "4.34",
+            "balance_prin": "0.0000",
+            "overdue_prin": "48222.0000",
+            "total_due": "50400.0000",
+            "total_pos": "48222.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b18263",
+            "bucket": "210",
+            "loan_id": "10366",
+            "booking_date": "2005-10-29",
+            "maturity_date": "2008-09-29",
+            "loan_tenure": "35",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "35",
+            "last_paid_instl_date": "2007-09-29",
+            "last_received_date": "2013-08-30",
+            "last_receipt_amount": "300000.0000",
+            "total_inst_due": "849600.0000",
+            "total_instl_recd": "569400.0000",
+            "dpd": "3290",
+            "overdue_instl_count": "11.57",
+            "balance_prin": "0.0000",
+            "overdue_prin": "265599.0000",
+            "total_due": "280200.0000",
+            "total_pos": "265599.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b18264",
+            "bucket": "210",
+            "loan_id": "9770",
+            "booking_date": "2005-09-08",
+            "maturity_date": "2008-08-08",
+            "loan_tenure": "35",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "35",
+            "last_paid_instl_date": "2007-12-08",
+            "last_received_date": "2006-06-29",
+            "last_receipt_amount": "500000.0000",
+            "total_inst_due": "731500.0000",
+            "total_instl_recd": "546550.0000",
+            "dpd": "3220",
+            "overdue_instl_count": "8.85",
+            "balance_prin": "0.0000",
+            "overdue_prin": "173013.0000",
+            "total_due": "184950.0000",
+            "total_pos": "173013.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        },
+        {
+            "id": "5819dcd9df295f5fb9b18265",
+            "bucket": "210",
+            "loan_id": "9866",
+            "booking_date": "2005-09-16",
+            "maturity_date": "2008-06-16",
+            "loan_tenure": "33",
+            "cuurent_month_instalment": "0.0000",
+            "total_installments_due_date": "33",
+            "last_paid_instl_date": "2008-06-16",
+            "last_received_date": "2008-05-29",
+            "last_receipt_amount": "54660.0000",
+            "total_inst_due": "601250.0000",
+            "total_instl_recd": "584835.0000",
+            "dpd": "3029",
+            "overdue_instl_count": "0.90",
+            "balance_prin": "0.0000",
+            "overdue_prin": "16415.0000",
+            "total_due": "16415.0000",
+            "total_pos": "16415.0000",
+            "createdOn": "Nov 3, 2016 6:11:37 AM"
+        }
+    ]
+
+    getLoans() {
+        var url = this.basicUrl + '/api/v1/loans';
+        return this.http.get(url)
+                .map(res=>res.json())
+                .catch(this.handleError);
     }
 
-    handleError(error):any {        
+    getLoanById(loanId) {
+         var url = this.basicUrl + '/api/v1/loans/' + loanId;      
+        return this.http.get(url)
+                .map(res=>res.json())
+                .catch(this.handleError);
+    }
+
+    handleError(error): any {
         return Observable.throw(error.json().error || 'Server error');
     }
 
